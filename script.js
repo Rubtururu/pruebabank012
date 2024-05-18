@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.ethereum.enable();
 
         const contractAddress = '0xE66e4dAB4f6e7D05C24D3B2D91aEfEa3aaCAb844'; // Dirección del contrato desplegado
-        const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"ClaimDividends","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Withdrawal","type":"event"},{"inputs":[],"name":"ceoAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"claimDividends","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"deposit","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"firstDepositTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTimeRemainingForNextDividendPayment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastDividendsPaymentTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalDividendsPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalTreasuryPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userDividends","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userDividendsClaimed","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userWithdrawals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+        const contractABI = [/* aquí va el ABI del contrato */];
 
         const contract = new web3.eth.Contract(contractABI, contractAddress);
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const totalTreasuryPool = await contract.methods.totalTreasuryPool().call();
             const totalDividendsPool = await contract.methods.totalDividendsPool().call();
             const lastDividendsPaymentTime = await contract.methods.lastDividendsPaymentTime().call();
-            const contractBalance = await contract.methods.totalDeposits().call(); // Corregir esto si es necesario
+            const contractBalance = await contract.methods.getContractBalance().call();
 
             // Obtener las estadísticas del usuario
             const userDeposits = await contract.methods.userDeposits(userAccount).call();
@@ -85,7 +85,7 @@ function calcularTiempoRestanteParaPago() {
     let segundosRestantes = 0;
 
     // Si ya es después de las 20:00 UTC, calcular el tiempo hasta las 20:00 UTC del día siguiente
-    if (horaActualUTC >= 20) {
+    if  (horaActualUTC >= 20) {
         horasRestantes = 24 - (horaActualUTC - 20);
     }
 
@@ -124,3 +124,5 @@ function inicializarContador() {
 
 // Inicializar el contador al cargar la página
 inicializarContador();
+
+
