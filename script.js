@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         async function updateStats() {
-            // Obtenemos las estadísticas del contrato
+            // Obtener las estadísticas del contrato
             const totalDeposits = await contract.methods.totalDeposits().call();
             const totalTreasuryPool = await contract.methods.totalTreasuryPool().call();
             const totalDividendsPool = await contract.methods.totalDividendsPool().call();
             const lastDividendsPaymentTime = await contract.methods.lastDividendsPaymentTime().call();
-            const contractBalance = await contract.methods.getContractBalance().call();
+            const contractBalance = await contract.methods.totalDeposits().call(); // Corregir esto si es necesario
 
-            // Obtenemos las estadísticas del usuario
+            // Obtener las estadísticas del usuario
             const userDeposits = await contract.methods.userDeposits(userAccount).call();
             const userWithdrawals = await contract.methods.userWithdrawals(userAccount).call();
             const userDividendsToday = await contract.methods.getUserAvailableDividends(userAccount).call();
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const userTotalWithdrawals = userWithdrawals;
             const userTotalDividends = await contract.methods.userDividendsClaimed(userAccount).call();
 
-            // Actualizamos los elementos HTML con las estadísticas obtenidas
+            // Actualizar los elementos HTML con las estadísticas obtenidas
             document.getElementById('user-address').innerText = userAccount; // Mostrar la dirección del usuario
             document.getElementById('total-deposits').innerText = web3.utils.fromWei(totalDeposits, 'ether');
             document.getElementById('total-treasury-pool').innerText = web3.utils.fromWei(totalTreasuryPool, 'ether');
@@ -124,10 +124,3 @@ function inicializarContador() {
 
 // Inicializar el contador al cargar la página
 inicializarContador();
-
-
-
-
-
-
-
