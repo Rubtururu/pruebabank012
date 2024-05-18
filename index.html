@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Decentralized</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.0/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        /* Aquí puedes agregar estilos personalizados */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bank Decentralized</h1>
+        <p>Conecta MetaMask para interactuar con el contrato inteligente.</p>
+        <div class="card">
+            <div class="card__content">
+                <h2>Estadísticas del Contrato</h2>
+                <div class="stat">
+    <p>Dirección del Usuario:</p>
+    <p class="highlight"><span id="user-address">--</span></p>
+</div>
+                <div class="stat">
+                    <p>Total Deposits:</p>
+                    <p class="highlight"><span id="total-deposits">--</span> BNB</p>
+                </div>
+                <div class="stat">
+                    <p>Total Treasury Pool:</p>
+                    <p class="highlight"><span id="total-treasury-pool">--</span> BNB</p>
+                </div>
+                <div class="stat">
+                    <p>Total Dividends Pool:</p>
+                    <p class="highlight"><span id="total-dividends-pool">--</span> BNB</p>
+                </div>
+                <div class="stat">
+                    <p>Last Dividends Payment Time:</p>
+                    <p class="highlight"><span id="last-dividends-payment-time">--</span></p>
+                </div>
+                <div class="stat">
+                    <p>User Deposits:</p>
+                    <p class="highlight"><span id="user-deposits">--</span> BNB</p>
+                </div>
+                <div class="stat">
+                    <p>User Withdrawals:</p>
+                    <p class="highlight"><span id="user-withdrawals">--</span> BNB</p>
+                </div>
+                <div class="stat">
+                    <p>Contract Balance:</p>
+                    <p class="highlight"><span id="contract-balance">--</span> BNB</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <h2>Estadísticas del Usuario</h2>
+                <div class="user-stat">
+                    <p>Dividendos Hoy:</p>
+                    <p class="highlight"><span id="user-dividends-today">--</span> BNB</p>
+                </div>
+                <div class="user-stat">
+                    <p>Depósito Actual:</p>
+                    <p class="highlight"><span id="user-current-deposit">--</span> BNB</p>
+                </div>
+                <div class="user-stat">
+                    <p>Retiro Total:</p>
+                    <p class="highlight"><span id="user-total-withdrawals">--</span> BNB</p>
+                </div>
+                <div class="user-stat">
+                    <p>Dividendos Totales:</p>
+                    <p class="highlight"><span id="user-total-dividends">--</span> BNB</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <h2>Próximo Pago de Dividendos</h2>
+                <div id="countdown-timer">--:--:--</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <h2>Depositar</h2>
+                <form id="deposit-form">
+                    <input type="number" id="deposit-amount" placeholder="Cantidad de BNB a depositar" min="0.01" step="0.01" required>
+                    <button type="submit">Depositar</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <h2>Retirar</h2>
+                <form id="withdraw-form">
+                    <input type="number" id="withdraw-amount" placeholder="Cantidad de BNB a retirar" min="0.001" step="0.001" required>
+                    <button type="submit">Retirar</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <h2>Reclamar Dividendos</h2>
+                <button id="claim-dividends">Reclamar Dividendos</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
