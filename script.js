@@ -52,75 +52,80 @@ document.addEventListener('DOMContentLoaded', async () => {
             const userTotalDividends = await contract.methods.userDividendsClaimed(userAccount).call();
 
             // Actualizamos los elementos HTML con las estadísticas obtenidas
+            document.getElementById('user-address').innerText = userAccount; // Mostrar la dirección del usuario
             document.getElementById('total-deposits').innerText = web3.utils.fromWei(totalDeposits, 'ether');
             document.getElementById('total-treasury-pool').innerText = web3.utils.fromWei(totalTreasuryPool, 'ether');
             document.getElementById('total-dividends-pool').innerText = web3.utils.fromWei(totalDividendsPool, 'ether');
             document.getElementById('last-dividends-payment-time').innerText = new Date(lastDividendsPaymentTime * 1000).toLocaleString();
-            document.getElementById('contract-balance').innerText = web3.utils.fromWei(contractBalance, 'ether');
-            document.getElementById('user-dividends-today').innerText = web3.utils.fromWei(userDividendsToday, 'ether');
-            document.getElementById('user-total-dividends').innerText = web3.utils.fromWei(userTotalDividends, 'ether');
             document.getElementById('user-deposits').innerText = web3.utils.fromWei(userDeposits, 'ether');
             document.getElementById('user-withdrawals').innerText = web3.utils.fromWei(userWithdrawals, 'ether');
+            document.getElementById('contract-balance').innerText = web3.utils.fromWei(contractBalance, 'ether');
+            document.getElementById('user-dividends-today').innerText = web3.utils.fromWei(userDividendsToday, 'ether');
+            document.getElementById('user-current-deposit').innerText = web3.utils.fromWei(userCurrentDeposit.toString(), 'ether'); // Convertir a cadena antes de mostrar
+            document.getElementById('user-total-withdrawals').innerText = web3.utils.fromWei(userTotalWithdrawals, 'ether');
+            document.getElementById('user-total-dividends').innerText = web3.utils.fromWei(userTotalDividends, 'ether');
         }
-
-        // Función para calcular el tiempo restante hasta el próximo pago de dividendos
-        function calcularTiempoRestanteParaPago() {
-            // Obtener la fecha y hora actuales en UTC
-            const ahora = new Date();
-            const horaActualUTC = ahora.getUTCHours();
-            const minutosActualesUTC = ahora.getUTCMinutes();
-            const segundosActualesUTC = ahora.getUTCSeconds();
-
-            // Calcular la cantidad de tiempo hasta las 20:00 UTC
-            let horasRestantes = 20 - horaActualUTC;
-            let minutosRestantes = 0;
-            let segundosRestantes = 0;
-
-            // Si ya es después de las 20:00 UTC, calcular el tiempo hasta las 20:00 UTC del día siguiente
-            if (horaActualUTC >= 20) {
-                horasRestantes = 24 - (horaActualUTC - 20);
-            }
-
-            // Calcular los minutos y segundos restantes
-            if (minutosActualesUTC > 0 || segundosActualesUTC > 0) {
-                horasRestantes--;
-                minutosRestantes = 60 - minutosActualesUTC;
-                segundosRestantes = 60 - segundosActualesUTC;
-            }
-
-            // Retornar el tiempo restante como objeto
-            return {
-                horas: horasRestantes,
-                minutos: minutosRestantes,
-                segundos: segundosRestantes
-            };
-        }
-
-        // Función para actualizar el contador de cuenta atrás
-        function actualizarContador() {
-            // Obtener el elemento del contador
-            const contador = document.getElementById('countdown-timer');
-
-            // Calcular el tiempo restante
-            const tiempoRestante = calcularTiempoRestanteParaPago();
-
-            // Mostrar el tiempo restante en el contador
-            contador.textContent = `${tiempoRestante.horas}h ${tiempoRestante.minutos}m ${tiempoRestante.segundos}s`;
-        }
-
-        // Función para inicializar el contador de cuenta atrás
-        function inicializarContador() {
-            // Actualizar el contador cada segundo
-            setInterval(actualizarContador, 1000);
-        }
-
-        // Inicializar el contador al cargar la página
-        inicializarContador();
 
     } else {
         alert('Por favor, instala MetaMask para utilizar esta aplicación.');
     }
 });
+
+// Función para calcular el tiempo restante hasta el próximo pago de dividendos
+function calcularTiempoRestanteParaPago() {
+    // Obtener la fecha y hora actuales en UTC
+    const ahora = new Date();
+    const horaActualUTC = ahora.getUTCHours();
+    const minutosActualesUTC = ahora.getUTCMinutes();
+    const segundosActualesUTC = ahora.getUTCSeconds();
+
+    // Calcular la cantidad de tiempo hasta las 20:00 UTC
+    let horasRestantes = 20 - horaActualUTC;
+    let minutosRestantes = 0;
+    let segundosRestantes = 0;
+
+    // Si ya es después de las 20:00 UTC, calcular el tiempo hasta las 20:00 UTC del día siguiente
+    if (horaActualUTC >= 20) {
+        horasRestantes = 24 - (horaActualUTC - 20);
+    }
+
+    // Calcular los minutos y segundos restantes
+    if (minutosActualesUTC > 0 || segundosActualesUTC > 0) {
+        horasRestantes--;
+        minutosRestantes = 60 - minutosActualesUTC;
+        segundosRestantes = 60 - segundosActualesUTC;
+    }
+
+    // Retornar el tiempo restante como objeto
+    return {
+        horas: horasRestantes,
+        minutos: minutosRestantes,
+        segundos: segundosRestantes
+    };
+}
+
+// Función para actualizar el contador de cuenta atrás
+function actualizarContador() {
+    // Obtener el elemento del contador
+    const contador = document.getElementById('countdown-timer');
+
+    // Calcular el tiempo restante
+    const tiempoRestante = calcularTiempoRestanteParaPago();
+
+    // Mostrar el tiempo restante en el contador
+    contador.textContent = `${tiempoRestante.horas}h ${tiempoRestante.minutos}m ${tiempoRestante.segundos}s`;
+}
+
+// Función para inicializar el contador de cuenta atrás
+function inicializarContador() {
+    // Actualizar el contador cada segundo
+    setInterval(actualizarContador, 1000);
+}
+
+// Inicializar el contador al cargar la página
+inicializarContador();
+
+
 
 
 
